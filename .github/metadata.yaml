@@ -1,0 +1,8 @@
+# .github/metadata.yaml
+description: "A single-element container holding exactly one element, for copyable, move-only, and non-escaping types."
+topics:
+  - primitives
+  - container
+homepage: "https://swift-institute.org"
+readme:
+  family: E

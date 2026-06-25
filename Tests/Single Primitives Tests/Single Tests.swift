@@ -1,5 +1,5 @@
-import Testing
 import Single_Primitives
+import Testing
 
 @Suite("Single Tests")
 struct SingleTests {
@@ -19,6 +19,14 @@ extension SingleTests.Unit {
         // Multipass via borrow: read the move-only element more than once without consuming it.
         #expect(single.element.id == 7)
         #expect(single.element.id == 7)
+    }
+
+    @Test
+    func `is copyable when its element is`() {
+        let original = Single(42)
+        let copy = original  // compiles only if Single<Int>: Copyable (conditional conformance)
+        #expect(original.element == 42)
+        #expect(copy.element == 42)
     }
 }
 

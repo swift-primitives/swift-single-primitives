@@ -15,17 +15,31 @@
 /// The matching single-element *iterator* — owns the element, yields it once — is a separate
 /// type.
 ///
-/// `Element` is `~Copyable` (so `Single<MoveOnly>` is itself move-only, while `Single<Int>` is
-/// copyable) but must be `Escapable`: a non-escaping value cannot be stored durably in a
-/// container that outlives the borrow it represents.
-public struct Single<Element: ~Copyable>: ~Copyable {
-    /// The stored element. Reading it *borrows* the container, so a move-only element can be
-    /// observed repeatedly without being consumed.
+/// `Element` is unconstrained — `~Copyable & ~Escapable`. `Single` inherits both capabilities
+/// from what it stores: `Single<Int>` is copyable, `Single<MoveOnly>` is itself move-only, and
+/// `Single` over a non-escaping element is itself `~Escapable`, its lifetime bound to the
+/// element's — so the container never outlives the borrow a non-escaping element represents,
+/// which is exactly why it can hold one. Each domain's conformance re-narrows `Element` to
+/// whatever that domain actually requires.
+public struct Single<Element: ~Copyable & ~Escapable>: ~Copyable, ~Escapable {
+    /// The stored element.
+    ///
+    /// Reading it *borrows* the container, so a move-only element can be observed repeatedly
+    /// without being consumed.
     public var element: Element
 
     /// Construct a container holding `element`.
     @inlinable
+    @_lifetime(copy element)
     public init(_ element: consuming Element) {
         self.element = element
     }
 }
+
+// `Single` inherits its element's capabilities. These conditional conformances restore each
+// capability that the `~Copyable` / `~Escapable` declaration suppresses, so `Single<Int>` is an
+// ordinary copyable, escapable value, `Single<MoveOnly>` stays move-only, and `Single` over a
+// non-escaping element stays `~Escapable`.
+extension Single: Copyable where Element: Copyable & ~Escapable {}
+
+extension Single: Escapable where Element: Escapable & ~Copyable {}
