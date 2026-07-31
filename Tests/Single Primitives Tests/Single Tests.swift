@@ -1,12 +1,14 @@
 import Single_Primitives
 import Testing
 
-@Suite("Single Tests")
-struct SingleTests {
+@Suite
+struct `Single Tests` {
     @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
 }
 
-extension SingleTests.Unit {
+extension `Single Tests`.Unit {
     @Test
     func `stores and exposes a copyable element`() {
         let single = Single(42)
