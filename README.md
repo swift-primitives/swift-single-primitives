@@ -92,3 +92,5 @@ Foundation-free.
 ## License
 
 Apache 2.0. See [LICENSE.md](LICENSE.md).
+
+<!-- TX12 fork-origin pull_request canary (swift-institute/.github#276): inert marker; this PR exists to exercise the authentic fork-origin CI hazard and is closed unmerged after evidence capture. -->
