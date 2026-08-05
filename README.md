@@ -92,3 +92,5 @@ Foundation-free.
 ## License
 
 Apache 2.0. See [LICENSE.md](LICENSE.md).
+
+<!-- temporary fork-safety probe: swift-institute/.github#276 predicate 10; not for merge -->
