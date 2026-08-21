@@ -18,7 +18,7 @@ extension `Single Tests`.Unit {
     @Test
     func `holds a move-only element, borrowable repeatedly`() {
         let single = Single(Token(7))
-        // Multipass via borrow: read the move-only element more than once without consuming it.
+
         #expect(single.element.id == 7)
         #expect(single.element.id == 7)
     }
@@ -26,7 +26,7 @@ extension `Single Tests`.Unit {
     @Test
     func `is copyable when its element is`() {
         let original = Single(42)
-        let copy = original  // compiles only if Single<Int>: Copyable (conditional conformance)
+        let copy = original
         #expect(original.element == 42)
         #expect(copy.element == 42)
     }
